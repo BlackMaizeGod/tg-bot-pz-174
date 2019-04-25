@@ -7,8 +7,8 @@ bot.onText(/\/date (.+)/, (msg, match) => {
     var chatID = msg.chat.id;
     var resp = match[1];
     resp.toString();
-    var day = parseInt(resp.slice(0,2));
-    var month = parseInt(resp.slice(3));
+    var day = parseInt(resp.split('.')[0]);
+    var month = parseInt(resp.split('.')[1]);
     var error = 'i feel that me gde-to naebivaut but i don`t understand where';
     var photo;
 
@@ -40,6 +40,9 @@ bot.onText(/\/date (.+)/, (msg, match) => {
             dayOfWeek = error;
             break;
     };
+      // bot.sendMessage(chatID, day);
+      //   bot.sendMessage(chatID, month);
+      //     bot.sendMessage(chatID, dayOfWeek);
 
     if (dayOfWeek !== error &&
         dayOfWeek !== 'sunday' && dayOfWeek !== 'saturday') {
