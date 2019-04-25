@@ -1,3 +1,4 @@
 #!/bin/bash
 
-node index.js &
+screen -dmS telebot sh command.sh
+
