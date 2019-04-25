@@ -1,4 +1,3 @@
 #!/bin/bash
 
-screen -r telebot
-exit
+pkill screen
