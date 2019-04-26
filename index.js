@@ -2,7 +2,9 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = '';
 const bot = new TelegramBot(token, {polling: true});
 var chatId,
-    dayOfWeek
+    dayOfWeek,
+    photo,
+    error = 'i feel that me gde-to naebivaut but i don`t understand where'
 
 bot.onText(/\/date (.+)/, (msg, match) => {
     var chatID = msg.chat.id;
@@ -12,8 +14,6 @@ bot.onText(/\/date (.+)/, (msg, match) => {
     var checkMonth = resp.split('.')[1];
     var day = parseInt(checkDay);
     var month = parseInt(checkMonth);
-    var error = 'i feel that me gde-to naebivaut but i don`t understand where';
-    var photo;
 
     if (isNaN(checkDay) && isNaN(checkMonth)){
          bot.sendMessage(chatID, error);
@@ -50,14 +50,22 @@ bot.onText(/\/report (.+)/,
 
 bot.onText(/\/today/, (msg) => {
         chatId = msg.chat.id;
-        let date = new Date();
+        var date = new Date();
         var todayMonth = date.getMonth()+1;
         var todayDay = date.getDate();
-        todayDay < 10 ? todayDay = `0${todayDay}` : todayDay = todayDay;
-        todayMonth < 10 ? todayMonth = `0${todayMonth}` : todayMonth = todayMonth;
         getDayOfWeek(date);
-        bot.sendMessage(chatId,`today is ${dayOfWeek}, ${todayDay}.${todayMonth}`);
+        showDateForTodayAndTomorrow(dayOfWeek, todayDay, todayMonth, photo, chatId);
     });
+
+    bot.onText(/\/tomorrow/, (msg) => {
+            chatId = msg.chat.id;
+            var date = new Date();
+            date.setDate(date.getDate() + 1);
+            var todayMonth = date.getMonth()+1;
+            var todayDay = date.getDate();
+            getDayOfWeek(date);
+            showDateForTodayAndTomorrow(dayOfWeek, todayDay, todayMonth, photo, chatId);
+        });
 
 bot.onText(/\/alert (.+)/, (msg, match) => {
         var chatId = msg.chat.id;
@@ -73,6 +81,7 @@ bot.onText(/\/help/, (msg) => {
     bot.sendMessage(chatId, `
 Command list :
 /today
+/tomorrow
 /date "date"
 Example: "09.08"
 09-day
@@ -86,8 +95,8 @@ Command list :
 /alert "notification for pz-174"
 /report "id"
 ===============================
-
 /today
+/tomorrow
 /date "date"
 Example: "09.08"
 09-day
@@ -125,4 +134,21 @@ function getDayOfWeek(somedate){
           dayOfWeek = error;
           break;
   };
+}
+function showDateForTodayAndTomorrow(dayOfWeek, todayDay, todayMonth, photo, chatId){
+  if (dayOfWeek !== 'sunday' && dayOfWeek !== 'saturday') {
+        if (todayDay % 2 == 0) {
+          todayDay < 10 ? todayDay = `0${todayDay}` : todayDay = todayDay;
+          todayMonth < 10 ? todayMonth = `0${todayMonth}` : todayMonth = todayMonth;
+          photo = `img/pair/${dayOfWeek}.png`;
+          bot.sendPhoto(chatId, photo, {caption: `${dayOfWeek}, ${todayDay}.${todayMonth}`});
+        } else {
+          todayDay < 10 ? todayDay = `0${todayDay}` : todayDay = todayDay;
+          todayMonth < 10 ? todayMonth = `0${todayMonth}` : todayMonth = todayMonth;
+          photo = `img/unpair/${dayOfWeek}.png`;
+          bot.sendPhoto(chatId, photo, {caption: `${dayOfWeek}, ${todayDay}.${todayMonth}`});
+        }
+    } else {
+     bot.sendMessage(chatId, "Mb holiday ☺️");
+    }
 }
