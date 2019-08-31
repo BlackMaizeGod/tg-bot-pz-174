@@ -1,10 +1,10 @@
 const TelegramBot = require('node-telegram-bot-api');
-const token = '';
+const token = '689506207:AAGqB2n5kP-lDGpAIZOdTA9pyYNBCP6atyk';
 const bot = new TelegramBot(token, {polling: true});
 var chatId,
     dayOfWeek,
     photo,
-    error = 'i feel that me gde-to naebivaut but i don`t understand where'
+    error = 'i feel that me gde-to naebivaut but i don`t understand where';
 
 bot.onText(/\/date (.+)/, (msg, match) => {
     var chatID = msg.chat.id;
@@ -19,7 +19,7 @@ bot.onText(/\/date (.+)/, (msg, match) => {
          bot.sendMessage(chatID, error);
        }else{
     let date = new Date(`2019, ${month}, ${day}`);
-    getDayOfWeek(date);
+    let a = getDayOfWeek(date);
 
     if (dayOfWeek !== error && !isNaN(checkDay) &&
         !isNaN(checkMonth) && dayOfWeek !== 'sunday' &&
@@ -69,7 +69,7 @@ bot.onText(/\/today/, (msg) => {
 
 bot.onText(/\/alert (.+)/, (msg, match) => {
         var chatId = msg.chat.id;
-        var chatPzId='-1001110402323'
+        var chatPzId='-1001110402323';
         var resp = match[1];
         chatId == "505926819" ? bot.sendMessage(chatPzId, resp) : bot.sendMessage(chatId, 'nice try)');
 
@@ -133,7 +133,8 @@ function getDayOfWeek(somedate){
       default:
           dayOfWeek = error;
           break;
-  };
+  }
+  return dayOfWeek;
 }
 function showDateForTodayAndTomorrow(dayOfWeek, todayDay, todayMonth, photo, chatId){
   if (dayOfWeek !== 'sunday' && dayOfWeek !== 'saturday') {

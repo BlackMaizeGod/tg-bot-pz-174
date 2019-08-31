@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "engines": {
     "node": "8.15.1"
@@ -12,7 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.17.15",
     "node-telegram-bot-api": "^0.30.0",
+    "nodemon": "^1.19.1",
     "start": "^5.1.0"
   }
 }
