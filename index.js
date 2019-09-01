@@ -1,6 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 const token = '689506207:AAGqB2n5kP-lDGpAIZOdTA9pyYNBCP6atyk';
-const bot = new TelegramBot(token, {pollingInterval: true});
+const bot = new TelegramBot(token, {polling: true});
 var chatId,
     dayOfWeek,
     photo,
